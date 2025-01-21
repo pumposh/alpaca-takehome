@@ -245,7 +245,11 @@ export default function SessionPage() {
           <p className="mt-2 text-gray-600">{formatDate(session.date)}</p>
         </div>
 
-        <div className="flex h-[calc(100vh-12rem)] flex-col rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+        {notes.length > 0 && (
+          <OptimizedNotes notes={notes} sessionId={id as string} />
+        )}
+
+        <div className="mt-8 flex h-[calc(100vh-24rem)] flex-col rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
           <div ref={notesContainerRef} className="flex-1 overflow-y-auto p-6">
             {notes.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center text-center">
@@ -272,7 +276,10 @@ export default function SessionPage() {
                 </p>
               </div>
             ) : (
-              <>
+              <div>
+                <h3 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">
+                  Session Notes
+                </h3>
                 <ul className="space-y-2">
                   {notes.map((note) => (
                     <li
@@ -304,12 +311,49 @@ export default function SessionPage() {
                     </li>
                   ))}
                 </ul>
-                <OptimizedNotes notes={notes} />
-              </>
+              </div>
             )}
           </div>
 
           <div className="border-t border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+            <div className="mb-2 flex items-center justify-end gap-4 text-xs text-gray-500 dark:text-gray-400">
+              <span className="flex items-center gap-1">
+                <kbd className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                  ↑
+                </kbd>
+                <span>/</span>
+                <kbd className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                  ↓
+                </kbd>
+                <span>to navigate</span>
+              </span>
+              <span className="flex items-center gap-1">
+                <kbd className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                  Delete
+                </kbd>
+                <span>to remove</span>
+              </span>
+              <span className="flex items-center gap-1">
+                <kbd className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                  Enter
+                </kbd>
+                <span>or</span>
+                <kbd className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                  Tab
+                </kbd>
+                <span>to add note</span>
+              </span>
+              <span className="flex items-center gap-1">
+                <kbd className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                  ⌘
+                </kbd>
+                <span>+</span>
+                <kbd className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                  Enter
+                </kbd>
+                <span>to optimize</span>
+              </span>
+            </div>
             <input
               ref={inputRef}
               type="text"
